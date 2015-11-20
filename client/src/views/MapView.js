@@ -76,6 +76,7 @@ var MapView = Backbone.View.extend({
     });
 
     function zoom(xyz) {
+      console.log(xyz)
       g.transition()
         .duration(750)
         .attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
@@ -83,6 +84,51 @@ var MapView = Backbone.View.extend({
         .style("stroke-width", 1.0 / xyz[2] + "px")
         .selectAll(".city")
         .attr("d", path.pointRadius(20.0 / xyz[2]));
+
+        //this.getCenteroid()
+
+      g.select('.tooltip.' + country.id).select('rect')
+        .attr("class", "scale")
+        .transition()
+        .duration(750)
+        //.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
+        //.attrTween("transform", function() { return d3.interpolateString("rotate(0)", "rotate(720)"); })
+        .tween('custom', updatePosition)
+        // .attr("transform", "scale3d(0.7,0.7,0)")
+        // .attr("style", function () {
+        //   return "transform: scale3d(0.5,0.5,0)";
+        // })
+    }
+
+    function updatePosition() {
+      var el = d3.select('#'+country.id);
+      //console.log(el)
+      var self = d3.select(this);
+      // var getCentroid = function(el) {
+      //   // get the DOM element from a D3 selection
+      //   // you could also use "this" inside .each()
+      //   var element = el.node(),
+      //   // use the native SVG interface to get the bounding box
+      //   bbox = element.getBBox();
+      //   console.log(bbox);
+      //   // return the center of the bounding box
+      //   return [bbox.x + bbox.width/2, bbox.y + bbox.height/2];
+      // }
+
+      return function(t) {
+        var coord = Backbone.View.prototype.getCentroid(el);
+        coord = {
+          x: coord[0],
+          y: coord[1]
+        };
+
+        console.log(coord)
+
+        self.attr({
+          x: coord.x,
+          y: coord.y
+        })
+      }
     }
 
     function getXYZ(d) {
@@ -96,12 +142,15 @@ var MapView = Backbone.View.extend({
     }
 
     function countryClicked(d) {
+      //console.log('aaa')
       g.selectAll(["#states", "#cities"]).remove();
       state = null;
 
       if (country) {
+        // deselect the country
         g.selectAll("#" + country.id).style('display', null)
           .classed('selected', false);
+        //country = null;
       }
       if (d && country !== d) {
         var xyz = getXYZ(d);

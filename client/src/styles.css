@@ -102,3 +102,6 @@ pre.prettyprint {
   margin-bottom: 0;
   padding: 9.5px;
 }
+.tooltip.scale {
+  transform-origin: left bottom;
+}

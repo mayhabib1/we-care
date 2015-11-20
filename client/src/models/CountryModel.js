@@ -1,5 +1,6 @@
 console.log("this is a file");
 var CountryModel = Backbone.Model.extend({
+  //url : '/issues'
   initialize: function(name) {
     this.set('url', 'country/' + name);
   },
