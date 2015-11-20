@@ -24,6 +24,10 @@ var AppView = Backbone.View.extend({
     this.model.on('renderBubbles', this.mapView.renderBubbles, this.mapView);
   },
 
+  // events: {
+  //   "click" : "keyAction",
+  // },
+
   render: function() {
     $('body').html(
       this.$el.append([
