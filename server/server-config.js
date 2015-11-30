@@ -69,7 +69,7 @@ app.get('/top', function(req, res) {
     return request(top_nyt)
       .then(function(body) {
         body = JSON.parse(body);
-        var articleArray = body.results.slice(0, 10);
+        var articleArray = body.results.slice(0, 20);
         return articleArray.map(function(article) {
           var location = [];
           console.log('HSFJSKDFDSKL:FJLS:DKJ');
