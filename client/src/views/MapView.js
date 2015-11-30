@@ -21,7 +21,7 @@ var MapView = Backbone.View.extend({
 
   initialize: function() {
     this.newsDisabled = false;
-    this.newsSource = 'NYT';
+    this.newsSource = 'Reddit';
     this.button = new Button({
       el: this.$el.find('button')
     });
@@ -328,8 +328,6 @@ var MapView = Backbone.View.extend({
             '</div>';
         }
       })
-
-    //force.start();
   },
 
   removeHeadlines: function() {
