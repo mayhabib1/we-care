@@ -1,5 +1,16 @@
 var MapView = Backbone.View.extend({
-  el: '<div><button class="breaking-news">Hide Breaking News</button><div id="map"></div></div>',
+  el: '' +
+      '<div>' +
+      '  <div class="onoffswitch">' +
+      '    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>' +
+      '    <label class="onoffswitch-label" for="myonoffswitch">' +
+      '      <span class="onoffswitch-inner"></span>' +
+      '      <span class="onoffswitch-switch"></span>' +
+      '    </label>' +
+      '  </div>' +
+      '  <button class="breaking-news">Hide Breaking News</button>' +
+      '  <div id="map"></div>' +
+      '</div>',
 
   advisoryKey: {
     "0": "white",
