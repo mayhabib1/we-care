@@ -21,6 +21,7 @@ var MapView = Backbone.View.extend({
 
   initialize: function() {
     this.newsDisabled = false;
+    this.newsSource = 'NYT';
     this.button = new Button({
       el: this.$el.find('button')
     });
@@ -180,7 +181,10 @@ var MapView = Backbone.View.extend({
     var context = this;
     var dataNodes = [];
     var dataLinks = [];
-    breakingNews.forEach(function(article) {
+    toRender = breakingNews.filter(function(article) {
+      return article.source === context.newsSource;
+    });
+    toRender.forEach(function(article) {
       var country = context.model.get('countryCollection').findWhere({
         countryName: article.location[0]
       });
@@ -330,6 +334,16 @@ var MapView = Backbone.View.extend({
   removeHeadlines: function() {
     d3.selectAll('.headline').remove();
     d3.selectAll('.link').remove();
+  },
+  renderNYT: function() {
+    this.removeHeadlines();
+    this.newsSource = 'NYT';
+    this.model.separateHeadlines();
+  },
+  renderReddit: function() {
+    this.removeHeadlines();
+    this.newsSource = 'Reddit';
+    this.model.separateHeadlines();
   }
 
 });

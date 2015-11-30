@@ -1,5 +1,5 @@
 var NewsModel = Backbone.Model.extend({
-  url: '/breaking',
+  url: '/top',
   parse: function(data) {
     return {
       breakingNews: data
