@@ -201,7 +201,7 @@ var CountryView = Backbone.View.extend({
 
   htmlBuilder: function(html) {
     var a = _.reduce(html, function(string, next) {
-      var toJoin = Array.isArray(next) ? next.splice(0, 4).join('') : next
+      var toJoin = Array.isArray(next) ? next.splice(0, 5).join('') : next
       return string + toJoin;
     }, '');
     //console.log(a);
