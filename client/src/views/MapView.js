@@ -21,7 +21,7 @@ var MapView = Backbone.View.extend({
 
   initialize: function() {
     this.newsDisabled = false;
-    this.newsSource = 'NYT';
+    this.newsSource = 'Reddit';
     this.button = new Button({
       el: this.$el.find('button')
     });
@@ -178,6 +178,7 @@ var MapView = Backbone.View.extend({
   },
 
   separateHeadlines: function(breakingNews) {
+    console.log(breakingNews);
     var context = this;
     var dataNodes = [];
     var dataLinks = [];
@@ -264,7 +265,7 @@ var MapView = Backbone.View.extend({
             var x = (node.x + 50) - (quad.point.x + 50),
               y = (node.y + 50) - (quad.point.y + 50),
               l = Math.sqrt(x * x + y * y),
-              r = 110; //node.radius + quad.point.radius;
+              r = 170; //node.radius + quad.point.radius;
             if (l < r) {
               l = (l - r) / l * .5;
               node.x -= x *= l;
@@ -303,7 +304,8 @@ var MapView = Backbone.View.extend({
       .data(dataNodes)
       .enter().append('foreignObject')
       .attr({
-        width: 100
+        width: 150,
+        height: 150
       })
       .attr("x", function(d) {
         return d.x;

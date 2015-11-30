@@ -2,8 +2,8 @@
 // Express & utility libraries 
 var express = require('express');
 var request = require('request-promise');
-var Q = require('q'); 
-var _ = require('lodash'); 
+var Q = require('q');
+var _ = require('lodash');
 var bodyParser = require('body-parser');
 // To initalize Mongo connection
 var db = require('../db/config.js');
@@ -14,12 +14,12 @@ var keys = require('./keys');
 var CountryData = require('../db/CountryData');
 var alerts = require('../db/TravelAlerts.json');
 // To initialize Reddit API wrapper for simpler querying 
-var Snoocore = require('snoocore'); 
+var Snoocore = require('snoocore');
 var reddit = new Snoocore({
   userAgent: '/u/wecare_app WeCare@1.0.0', // unique string identifying the app
   oauth: {
     type: 'implicit',
-    key: keys.top_reddit,  
+    key: keys.top_reddit,
     redirectUri: 'http://localhost:3000',
     scope: ['read'],
     deviceId: 'DO_NOT_TRACK_THIS_DEVICE'
@@ -52,17 +52,17 @@ app.get('/top', function(req, res) {
   // API REQUESTS ====================================================
   // Sends multiple requests asynchronously 
   Q.all([
-    requestTopNYT(top_nyt),
-    requestTopReddit()
-  ])
-  .spread(function(newsNYT, newsReddit) {
-    var topArray = newsNYT.concat(newsReddit); 
-    res.send(topArray); 
-  })
-  .catch(function(error) {
-    console.log(error); 
-  })
-  .done(); 
+      requestTopNYT(top_nyt),
+      requestTopReddit()
+    ])
+    .spread(function(newsNYT, newsReddit) {
+      var topArray = newsNYT.concat(newsReddit);
+      res.send(topArray);
+    })
+    .catch(function(error) {
+      console.log(error);
+    })
+    .done();
 
   // NYT API
   function requestTopNYT(top_nyt) {
@@ -71,21 +71,25 @@ app.get('/top', function(req, res) {
         body = JSON.parse(body);
         var articleArray = body.results.slice(0, 10);
         return articleArray.map(function(article) {
-          var location = []; 
+          var location = [];
           console.log('HSFJSKDFDSKL:FJLS:DKJ');
-          if (typeof article.geo_facet === "string") { article.geo_facet = [] }; 
+          if (typeof article.geo_facet === "string") {
+            article.geo_facet = []
+          };
           article.geo_facet.forEach(function(loc) {
             console.log(location);
             var country = _.find(CountryData, function(co) {
               // Filters for capital cities or country name 
               if (co.capital === loc || co.name.common === loc) {
-                return true; 
+                return true;
               }
             });
-            if (country && location.length < 1) { location.push(country.name.common) }; 
-          }); 
+            if (country && location.length < 1) {
+              location.push(country.name.common)
+            };
+          });
           return {
-            source: "NYT", 
+            source: "NYT",
             headline: article.title,
             url: article.url,
             location: location
@@ -95,28 +99,31 @@ app.get('/top', function(req, res) {
       .catch(function(error) {
         res.send(error);
       });
-  }; 
+  };
 
   // Reddit API
   function requestTopReddit() {
     return reddit('/r/worldnews/top').listing({
-      limit: 10
-    })
+        limit: 10
+      })
       .then(function(slice) {
-        var articleArray = slice.children; 
+        var articleArray = slice.children;
         return articleArray.map(function(article) {
           // Extract country name from article headline
           var splitTitle = article.data.title.split(' ');
-          var location = []; 
+          var location = [];
           splitTitle.forEach(function(word) {
             var country = _.find(CountryData, function(co) {
               // Filters for denonym or country name. Denonym example: Russian for Russia, Italian for Italy
+
               if (co.demonym === word || co.name.common === word || co.capital === word) {
-                return true; 
-              }    
-            }); 
-            if (country && location.length < 1) { location.push(country.name.common) }; 
-          }); 
+                return true;
+              }
+            });
+            if (country && location.length < 1) {
+              location.push(country.name.common)
+            };
+          });
           return {
             source: "Reddit",
             headline: article.data.title,
@@ -126,7 +133,7 @@ app.get('/top', function(req, res) {
         })
       })
       .catch(function(error) {
-        res.send(error); 
+        res.send(error);
       });
   }
 });
@@ -144,7 +151,7 @@ app.get('/issues', function(req, res) {
 
   // BUILD QUERY URLS ================================================
   var nyt_url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + req.query.country + '&fq=section_name:("Front Page" "Global Home" "International Home" "NYT Now" "Today\'s Headlines" "Topics" "World")&begin_date=' + todaysDate + '&api-key=' + keys.query_nyt;
-  var giving_url = 'https://api.justgiving.com/{' + keys.just_giving + '}/v1/onesearch?q={' + req.query.country + '}'; 
+  var giving_url = 'https://api.justgiving.com/{' + keys.just_giving + '}/v1/onesearch?q={' + req.query.country + '}';
   var options = {
     url: giving_url,
     headers: {
@@ -154,21 +161,21 @@ app.get('/issues', function(req, res) {
   // API REQUESTS ====================================================
   // Sends multiple requests asynchronously 
   Q.all([
-    requestNY(nyt_url),
-    requestGiving(options),
-    getFlag(req.query.country)
-  ])
-  .spread(function(news, charities, flag) {
-    res.send({
-      news: news,
-      charities: charities,
-      flag: flag
+      requestNY(nyt_url),
+      requestGiving(options),
+      getFlag(req.query.country)
+    ])
+    .spread(function(news, charities, flag) {
+      res.send({
+        news: news,
+        charities: charities,
+        flag: flag
+      })
     })
-  })
-  .catch(function(error) {
-    console.log(error); 
-  })
-  .done(); 
+    .catch(function(error) {
+      console.log(error);
+    })
+    .done();
 
   // NYT API
   function requestNY(nyt_url) {
@@ -184,36 +191,38 @@ app.get('/issues', function(req, res) {
           };
         });
       });
-  }; 
+  };
   // JustGiving API
   function requestGiving(options) {
     return request(options)
-        .then(function(body) {
-          body = JSON.parse(body);
-          var indexes = body.GroupedResults; 
-          // Extract Charities object from GroupedResults array
-          var charities; 
-          indexes.forEach(function(index) {
-            if (index.Title === "Charities") {
-              charities = index.Results; 
-              charities.forEach(function(charity) {
-                charity.Logo = "https:" + charity.Logo;
-              }); 
-            }
-          });
-          return charities; 
-        });  
-  }; 
+      .then(function(body) {
+        body = JSON.parse(body);
+        var indexes = body.GroupedResults;
+        // Extract Charities object from GroupedResults array
+        var charities;
+        indexes.forEach(function(index) {
+          if (index.Title === "Charities") {
+            charities = index.Results;
+            charities.forEach(function(charity) {
+              charity.Logo = "https:" + charity.Logo;
+            });
+          }
+        });
+        return charities;
+      });
+  };
   // Get country's flag
   function getFlag(country) {
     var country = country.replace(/"/g, "");
     var code = _.find(CountryData, function(co) {
-      if (co.name.common === country) { return true; };     
-    }); 
+      if (co.name.common === country) {
+        return true;
+      };
+    });
     if (code) {
       code = code.cca2.toString().toLowerCase();
       return code + ".png";
-    }    
+    }
   }
 });
 
