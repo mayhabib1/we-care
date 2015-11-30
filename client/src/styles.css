@@ -6,7 +6,7 @@ a {
 body {
   background-color: #444;
   color: #444;
-  font-family: "Helvetica Neue";
+  font-family: 'Lato', 'Helvetica Neue';
   /*margin-left: 20px;*/
   margin-top: 20px;
   padding-left: 20px;
@@ -293,6 +293,7 @@ img.heart {
   padding-left: 10px;
 }*/
 .tooltip-charity-header {
+  font-family: 'Montserrat Subrayada', sans-serif;
   text-align: center;
   margin-top: 5px;
 }
@@ -300,7 +301,8 @@ img.heart {
 .tooltip-charity-logo {
   width: 60px;
   height: 60px;
-  margin-right: 10px;
+  margin: 5px 10px 0 3px;
+  /*margin-right: 10px;*/
   border-radius: 7%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -334,12 +336,14 @@ img.heart {
   text-transform: uppercase;
 }
 .tooltip .charity-description {
+  /*font-weight: */
   white-space: pre-line;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 4;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  padding-top: 4px;
   /*width: 100%;*/
   /*text-overflow: ellipsis;
   white-space:nowrap;
@@ -352,6 +356,7 @@ img.heart {
   float: right;
   font-style: italic;
   margin-right: 5px;
+  padding-top: 3px;
 }
 .tooltip ul {
   /*list-style-type: none;*/
@@ -401,7 +406,7 @@ img.heart {
 }
 .tooltip li.tooltip-charity-box:not(:nth-child(1)){
   margin-top: 10px;
-  height: 80px;
+  height: 86px;
 }
 .tooltip li.tooltip-charity-box:nth-child(3) {
   margin-left: 10px;
@@ -426,11 +431,13 @@ button {
   border-radius: 3px;
   padding: 5px;
 }
-button.breaking-news {
+button.breaking-news,
+.onoffswitch {
   position: absolute;
   right : 1%;
   top : 120px;
   margin: -20px 20px 0 0;
+  font-family: 'Lato';
   /*height: 35px;
   font-size: 11pt;
   color: white;
@@ -459,4 +466,52 @@ button.breaking-news {
   padding: 5px;*/
   padding: 0 10px 31px 10px;
 }
-
+/**
+ *  SWITCH STYLE
+ */
+.onoffswitch {
+    right: 12%;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 1px solid #999999; border-radius: 3px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 35px; padding: 0; line-height: 31px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+.onoffswitch-inner:before {
+    content: "NYT";
+    padding-left: 10px;
+    background-color: #2E8DEF; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "Reddit";
+    padding-right: 10px;
+    background-color: #CCCCCC; color: #333333;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 25px; margin: 0px;
+    background: #000000;
+    position: absolute; top: 0; bottom: 0;
+    right: 65px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
