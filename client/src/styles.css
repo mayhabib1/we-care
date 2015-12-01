@@ -594,6 +594,10 @@ button.breaking-news,
 .toggle-source-news .onoffswitch-inner:before,
 .toggle-source-news .onoffswitch-inner:after {
   content: "";
+  height: 31px; 
+}
+.toggle-source-news .onoffswitch-inner:before {
+  background-size: 19px;
 }
 .toggle-source-news .onoffswitch-inner:after {
   background-position: 30px;
