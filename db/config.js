@@ -13,6 +13,9 @@ var request = require('request');
 // required for automating travel warning updates
 var CronJob = require('cron').CronJob;
 
+// To write in the travel warnings
+var fs = require('node-fs');
+
 // CONNECT TO DB ====================================
 mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/whocaresdb';
 
