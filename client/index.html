@@ -40,6 +40,12 @@
   $(function() {
     var app = new AppModel();
     var appView = new AppView({model:app});
+    $(document).on('click', '#myonoffswitch-map', function () {
+      $('#myonoffswitch').click();
+    });
+    $(document).on('click', '#myonoffswitch', function () {
+      $('#myonoffswitch-map').click();
+    })
   });
 </script>
 </body>

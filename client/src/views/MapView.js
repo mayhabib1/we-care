@@ -71,7 +71,25 @@ var MapView = Backbone.View.extend({
       })
       .attr("x", '5')
       .attr("y", '10')
-      .html('<div class="map-breaking-news"><button class="icon"></button></div>');
+      .html('<div class="toggle-source-news">' +
+            '  <div class="onoffswitch">' +
+            '    <input type="checkbox" name="map-onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch-map" checked>' +
+            '    <label class="onoffswitch-label" for="myonoffswitch-map">' +
+            '      <span class="onoffswitch-inner"></span>' +
+            '      <span class="onoffswitch-switch"></span>' +
+            '    </label>' +
+            '  </div>' +
+            '</div>' +
+            '<div class="map-breaking-news"><button class="icon"></button></div>');
+
+    // svg.append('foreignObject')
+    //   .attr('class', 'toggle-bn-container')
+    //   .attr({
+    //     width: 180
+    //   })
+    //   .attr("x", '5')
+    //   .attr("y", '10')
+    //   .html();
 
     svg.append("rect")
       .attr("class", "background")

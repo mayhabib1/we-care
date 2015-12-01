@@ -8,6 +8,10 @@ var Button = Backbone.View.extend({
     this.$mainBtn = this.$el;
     this.$mapBtn;
     this.toggleIconClass();
+
+    // Toggle elements
+    this.$mainToggle = 
+    this.$mapToggle;
   },
   toggleIconClass: function() {
     if (!this.newsDisabled) {
@@ -38,6 +42,8 @@ var Button = Backbone.View.extend({
   swapDomButton: function(mustShrink) {
     var newElement;
     this.$mapBtn = this.$mapBtn || $('.map-breaking-news button');
+    this.$mapToggle = this.$mapToggle || $('.toggle-source-news .onoffswitch');
+    this.$mainToggle = this.$mainToggle || $('.onoffswitch:eq(0)');
     if (!mustShrink) {
       newElement = this.$mainBtn;
       this.isShrank = false;
@@ -54,9 +60,13 @@ var Button = Backbone.View.extend({
       this.toggleIconClass();
       this.$mainBtn.css('display', 'none');
       this.$mapBtn.css('display', 'block');
+      this.$mainToggle.css('display', 'none');
+      this.$mapToggle.css('display', 'block');
     } else {
       this.$mainBtn.css('display', 'block');
       this.$mapBtn.css('display', 'none');
+      this.$mainToggle.css('display', 'block');
+      this.$mapToggle.css('display', 'none');
     }
   }
 })

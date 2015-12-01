@@ -426,7 +426,8 @@ button {
   height: 35px;
   font-size: 11pt;
   color: white;
-  background: rgba(0,0,0,0.1);
+  /*background: rgba(0,0,0,0.1);*/
+  background-color: rgb(58, 57, 57);
   border: 1px solid rgba(255,255,255,0.4);
   border-radius: 3px;
   padding: 5px;
@@ -470,48 +471,140 @@ button.breaking-news,
  *  SWITCH STYLE
  */
 .onoffswitch {
-    right: 12%;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+  right: 12%;
+  width: 180px;
+  -webkit-user-select:none; 
+  -moz-user-select:none; 
+  -ms-user-select: none;
 }
-.onoffswitch-checkbox {
-    display: none;
+.onoffswitch-checkbox,
+.onoffswitch-checkbox-map {
+  display: none;
 }
 .onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 1px solid #999999; border-radius: 3px;
+  display: block; 
+  overflow: hidden; 
+  cursor: pointer;
+  border: 1px solid #999999;
+  border-radius: 3px;
 }
 .onoffswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
+  display: block; 
+  width: 200%; 
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
 }
 .onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; float: left; width: 50%; height: 35px; padding: 0; line-height: 31px;
-    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-    box-sizing: border-box;
-    border: 2px solid transparent;
-    background-clip: padding-box;
+  display: block; 
+  float: left; 
+  width: 50%; 
+  height: 33px; 
+  padding: 0; 
+  line-height: 29px;
+  font-size: 14px; 
+  color: white; 
+  /*font-family: Trebuchet, Arial, sans-serif; */
+  font-weight: bold;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 .onoffswitch-inner:before {
-    content: "NYT";
-    padding-left: 10px;
-    background-color: #2E8DEF; color: #FFFFFF;
+  content: "New York Times";
+  background-image: url('/src/img/nyt-logo.png');
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 5px;
+  padding-left: 30px;
+  border-radius: 3px 5px 5px 3px;
+  background-color: #3A3939;
+  color: #FFFFFF;
 }
 .onoffswitch-inner:after {
-    content: "Reddit";
-    padding-right: 10px;
-    background-color: #CCCCCC; color: #333333;
-    text-align: right;
+  content: "Reddit News";
+  background-image: url('/src/img/reddit-logo.png');
+  background-size: 33px;
+  background-repeat: no-repeat;
+  background-position: 40px;
+  padding-right: 10px;
+  /*background-color: #CCCCCC; color: #333333;*/
+  border-radius: 5px 3px 3px 5px;
+  background-color: #FFF;
+  color: #444;
+  text-align: right;
 }
 .onoffswitch-switch {
-    display: block; width: 25px; margin: 0px;
-    background: #000000;
-    position: absolute; top: 0; bottom: 0;
-    right: 65px;
-    transition: all 0.3s ease-in 0s; 
+  display: block; 
+  width: 25px; 
+  margin: 0px;
+  background: #F64E53;
+  position: absolute; 
+  top: 0; 
+  bottom: 0;
+  right: 152px;
+  border-radius: 2px 0 0 2px;
+  transition: all 0.3s ease-in 0s; 
+  top: 3px;
+  bottom: 3px;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+  margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch,
+.onoffswitch-checkbox-map:checked + .onoffswitch-label .onoffswitch-switch {
+  right: 3px;
+  border-radius: 0 2px 2px 0;
+}
+.toggle-source-news {
+  position: relative;
+  right: 80%;
+}
+.toggle-source-news .onoffswitch {
+  display: none;
+  width: 70px;
+  top: 20px;
+  /* position: relative; */
+  /* right: -400%; */
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1.0, 1.0);
+}
+.toggle-source-news .onoffswitch-inner {
+  display: block; 
+  width: 200%; 
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.toggle-source-news .onoffswitch-switch {
+  display: block; 
+  width: 25px; 
+  margin: 0px;
+  background: #F64E53;
+  position: absolute; 
+  top: 0; 
+  bottom: 0;
+  right: 152px;
+  border-radius: 2px 0 0 2px;
+  transition: all 0.3s ease-in 0s; 
+  top: 3px;
+  bottom: 3px;
+}
+.toggle-source-news .onoffswitch-switch {
+  right: 42px;
+}
+.toggle-source-news .onoffswitch-inner:before,
+.toggle-source-news .onoffswitch-inner:after {
+  content: "";
+  height: 31px; 
+}
+.toggle-source-news .onoffswitch-inner:before {
+  background-size: 19px;
+}
+.toggle-source-news .onoffswitch-inner:after {
+  background-position: 30px;
+}
+/*.toggle-source-news .onoffswitch-checkbox:checked + .toggle-source-news .onoffswitch-label .toggle-source-news .onoffswitch-inner {
     margin-left: 0;
 }
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+.toggle-source-news .onoffswitch-checkbox:checked + .toggle-source-news .onoffswitch-label .toggle-source-news .onoffswitch-switch {
     right: 0px; 
-}
+}*/
