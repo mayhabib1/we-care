@@ -18,14 +18,15 @@ var CountryView = Backbone.View.extend({
     this.model.set('y', bbox.y + bbox.height / 2);
 
     if (this.countryID === "France") {
-      this.model.set('y', bbox.y + bbox.height / 2 - 100);
+      this.model.set('x', bbox.x + bbox.width / 2 + 10);
+      this.model.set('y', bbox.y + bbox.height / 2 - 90);
     }
     if (this.countryID === "United_States") {
       this.model.set('x', bbox.x + bbox.width / 2 - 250);
       this.model.set('y', bbox.y + bbox.height / 2 + 50);
     }
     if (this.countryID === "Argentina") {
-      this.model.set('y', bbox.y + bbox.height / 2 - 50);
+      this.model.set('y', bbox.y + bbox.height / 2 - 30);
     }
     if (this.countryID === "Canada") {
       this.model.set('x', bbox.x + bbox.width / 2 - 25);
@@ -127,7 +128,6 @@ var CountryView = Backbone.View.extend({
         height: 300
       })
     if (this.model.get('issues') === undefined) {
-      console.log('getting data');
       this.model.getData();
     } else {
       this.showCountryData();

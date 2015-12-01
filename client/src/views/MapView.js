@@ -1,16 +1,20 @@
 var MapView = Backbone.View.extend({
   el: '' +
-      '<div>' +
-      '  <div class="onoffswitch">' +
-      '    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>' +
-      '    <label class="onoffswitch-label" for="myonoffswitch">' +
-      '      <span class="onoffswitch-inner"></span>' +
-      '      <span class="onoffswitch-switch"></span>' +
-      '    </label>' +
-      '  </div>' +
-      '  <button class="breaking-news">Hide Breaking News</button>' +
-      '  <div id="map"></div>' +
-      '</div>',
+    '<div>' +
+    '  <div class="onoffswitch">' +
+    '    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>' +
+    '    <label class="onoffswitch-label" for="myonoffswitch">' +
+    '      <span class="onoffswitch-inner"></span>' +
+    '      <span class="onoffswitch-switch"></span>' +
+    '    </label>' +
+    '  </div>' +
+    '  <button class="breaking-news">Hide Breaking News</button>' +
+    '  <div id="map"></div>' +
+    '</div>',
+
+  events: {
+    'click #myonoffswitch': 'toggleNewsSource'
+  },
 
   advisoryKey: {
     "0": "white",
@@ -20,12 +24,16 @@ var MapView = Backbone.View.extend({
   },
 
   initialize: function() {
-    this.newsDisabled = false;
+    this.newsSource = 'NYT';
     this.button = new Button({
       el: this.$el.find('button')
     });
-    this.button.on('hideNews', this.removeHeadlines, this);
+    this.button.on('hideNews', function() {
+      this.$el.find('.onoffswitch').hide();
+      this.removeHeadlines();
+    }, this);
     this.button.on('showNews', function() {
+      this.$el.find('.onoffswitch').show();
       this.model.separateHeadlines();
     }, this)
     this.model.on('warningsLoaded', this.renderMap, this);
@@ -41,7 +49,6 @@ var MapView = Backbone.View.extend({
       country,
       state;
 
-    console.log(mwidth)
     var projection = d3.geo.mercator()
       .scale(150)
       .translate([width / 2, height / 1.5]);
@@ -153,6 +160,8 @@ var MapView = Backbone.View.extend({
           .classed('selected', false);
       }
       if (d && country !== d) {
+        context.$el.find('button').hide();
+        context.$el.find('.onoffswitch').hide();
         context.removeHeadlines();
         var xyz = getXYZ(d);
         country = d;
@@ -161,7 +170,9 @@ var MapView = Backbone.View.extend({
         var xyz = [width / 2, height / 1.5, 1];
         country = null;
         zoom(xyz);
+        context.$el.find('button').show();
         if (!context.button.newsDisabled) {
+          context.$el.find('.onoffswitch').show();
           setTimeout(context.model.separateHeadlines.bind(context.model), 1000);
         }
       }
@@ -180,7 +191,10 @@ var MapView = Backbone.View.extend({
     var context = this;
     var dataNodes = [];
     var dataLinks = [];
-    breakingNews.forEach(function(article) {
+    toRender = breakingNews.filter(function(article) {
+      return article.source === context.newsSource;
+    });
+    toRender.forEach(function(article) {
       var country = context.model.get('countryCollection').findWhere({
         countryName: article.location[0]
       });
@@ -260,7 +274,7 @@ var MapView = Backbone.View.extend({
             var x = (node.x + 50) - (quad.point.x + 50),
               y = (node.y + 50) - (quad.point.y + 50),
               l = Math.sqrt(x * x + y * y),
-              r = 110; //node.radius + quad.point.radius;
+              r = context.newsSource === 'NYT' ? 110 : 170; //node.radius + quad.point.radius;
             if (l < r) {
               l = (l - r) / l * .5;
               node.x -= x *= l;
@@ -298,8 +312,8 @@ var MapView = Backbone.View.extend({
     nodes = d3.select("#map").select("svg").selectAll('.node')
       .data(dataNodes)
       .enter().append('foreignObject')
-      .attr({
-        width: 100
+      .attr("width", function(d) {
+        return context.newsSource === "NYT" ? 100 : 150;
       })
       .attr("x", function(d) {
         return d.x;
@@ -315,7 +329,6 @@ var MapView = Backbone.View.extend({
       })
       .html(function(d) {
         if (d.headline) {
-          console.log(d);
           return '' +
             '<div class="breaking-news-container">' +
             '  <div class="country-name">' + d.countryName + '</div>' +
@@ -323,13 +336,28 @@ var MapView = Backbone.View.extend({
             '</div>';
         }
       })
-
-    //force.start();
   },
 
+  toggleNewsSource: function() {
+    this.newsSource === 'NYT' ? this.renderReddit() : this.renderNYT();
+  },
   removeHeadlines: function() {
     d3.selectAll('.headline').remove();
     d3.selectAll('.link').remove();
+  },
+  renderNYT: function() {
+    this.removeHeadlines();
+    this.newsSource = 'NYT';
+    if (!this.button.newsDisabled) {
+      this.model.separateHeadlines();
+    }
+  },
+  renderReddit: function() {
+    this.removeHeadlines();
+    this.newsSource = 'Reddit';
+    if (!this.button.newsDisabled) {
+      this.model.separateHeadlines();
+    }
   }
 
 });

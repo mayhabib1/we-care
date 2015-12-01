@@ -651,7 +651,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "Côte d'Ivoire",
+        "id": "Ivory Coast",
         "arcs": [
           [-93, 317, 318, 319, 320, 321]
         ]
@@ -2736,7 +2736,7 @@
         ]
       }, {
         "type": "Polygon",
-        "id": "Cuba",
+        "id": "Cuba1",
         "arcs": [
           [1077, -372]
         ]
