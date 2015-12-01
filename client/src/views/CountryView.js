@@ -44,7 +44,7 @@ var CountryView = Backbone.View.extend({
 
     this.makeToolTip();
     this.makeHoverTip();
-
+    
     this.model.on('dataLoaded', this.showCountryData, this);
     // this.model.on('change:news', this.showBreakingStory, this);
     this.model.on('selection', this.selectCountry, this);

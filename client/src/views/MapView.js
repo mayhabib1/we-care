@@ -36,6 +36,12 @@ var MapView = Backbone.View.extend({
     }, this)
     this.model.on('warningsLoaded', this.renderMap, this);
     this.model.on('separateHeadlines', this.separateHeadlines, this);
+    $(window).on('resize', function() {
+      d3.select('.map-bn-container')
+        .attr('x', function () {
+          return $("#map").width() - 55;
+        })
+    });
   },
 
   renderMap: function() {

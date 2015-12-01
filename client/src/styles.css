@@ -461,7 +461,8 @@ button.breaking-news,
   /*right : 1%;*/
   /*top : 120px;*/
   font-size: 20pt;
-  margin: -33px 20px 0 0;
+  /*margin: -33px 20px 0 0;*/
+  margin: -33px 0 0 0px;
   -webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0) scale(1.0, 1.0);
   height: 30px;
@@ -568,7 +569,8 @@ button.breaking-news,
 }
 .toggle-source-news {
   position: relative;
-  right: 37%;
+  /*right: 37%;*/
+  margin-left: -80px;
 }
 .toggle-source-news .onoffswitch {
   display: none;
