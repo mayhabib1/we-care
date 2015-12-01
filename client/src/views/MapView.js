@@ -49,7 +49,6 @@ var MapView = Backbone.View.extend({
       country,
       state;
 
-    console.log(mwidth)
     var projection = d3.geo.mercator()
       .scale(150)
       .translate([width / 2, height / 1.5]);
@@ -161,7 +160,6 @@ var MapView = Backbone.View.extend({
           .classed('selected', false);
       }
       if (d && country !== d) {
-        console.log(context.$el);
         context.$el.find('button').hide();
         context.$el.find('.onoffswitch').hide();
         context.removeHeadlines();
@@ -190,15 +188,12 @@ var MapView = Backbone.View.extend({
   },
 
   separateHeadlines: function(breakingNews) {
-    console.log(breakingNews);
     var context = this;
     var dataNodes = [];
     var dataLinks = [];
     toRender = breakingNews.filter(function(article) {
-      console.log(context.newsSource);
       return article.source === context.newsSource;
     });
-    console.log(toRender, 'render?');
     toRender.forEach(function(article) {
       var country = context.model.get('countryCollection').findWhere({
         countryName: article.location[0]
@@ -279,7 +274,7 @@ var MapView = Backbone.View.extend({
             var x = (node.x + 50) - (quad.point.x + 50),
               y = (node.y + 50) - (quad.point.y + 50),
               l = Math.sqrt(x * x + y * y),
-              r = context.newsSource === 'NYT' ? 110 : 160; //node.radius + quad.point.radius;
+              r = context.newsSource === 'NYT' ? 110 : 170; //node.radius + quad.point.radius;
             if (l < r) {
               l = (l - r) / l * .5;
               node.x -= x *= l;
@@ -358,7 +353,6 @@ var MapView = Backbone.View.extend({
     }
   },
   renderReddit: function() {
-    console.log('changing to reddit');
     this.removeHeadlines();
     this.newsSource = 'Reddit';
     if (!this.button.newsDisabled) {

@@ -1,7 +1,6 @@
 var NewsModel = Backbone.Model.extend({
   url: '/top',
   parse: function(data) {
-    console.log(JSON.stringify(data), 'data');
     return {
       breakingNews: data
     }
