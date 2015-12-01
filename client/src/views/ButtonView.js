@@ -10,7 +10,7 @@ var Button = Backbone.View.extend({
     this.toggleIconClass();
 
     // Toggle elements
-    this.$mainToggle = 
+    this.$mainToggle; 
     this.$mapToggle;
   },
   toggleIconClass: function() {
