@@ -63,9 +63,9 @@ var Button = Backbone.View.extend({
       this.$mainToggle.css('display', 'none');
       this.$mapToggle.css('display', 'block');
     } else {
-      this.$mainBtn.css('display', 'block');
+      this.$mainBtn.css('display', 'inline-block');
       this.$mapBtn.css('display', 'none');
-      this.$mainToggle.css('display', 'block');
+      this.$mainToggle.css('display', 'inline-block');
       this.$mapToggle.css('display', 'none');
     }
   }

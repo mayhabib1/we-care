@@ -1,20 +1,18 @@
 var MapView = Backbone.View.extend({
   el: '' +
-    '<div>' +
-    '  <div class="onoffswitch">' +
-    '    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>' +
-    '    <label class="onoffswitch-label" for="myonoffswitch">' +
-    '      <span class="onoffswitch-inner"></span>' +
-    '      <span class="onoffswitch-switch"></span>' +
-    '    </label>' +
-    '  </div>' +
-    '  <button class="breaking-news">Hide Breaking News</button>' +
-    '  <div id="map"></div>' +
-    '</div>',
-
-  events: {
-    'click #myonoffswitch': 'toggleNewsSource'
-  },
+      '<div>' +
+      '  <div class="btn-container">' +
+      '    <div class="onoffswitch">' +
+      '      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>' +
+      '      <label class="onoffswitch-label" for="myonoffswitch">' +
+      '        <span class="onoffswitch-inner"></span>' +
+      '        <span class="onoffswitch-switch"></span>' +
+      '      </label>' +
+      '    </div>' +
+      '    <button class="breaking-news">Hide Breaking News</button>' +
+      '  </div>' +
+      '  <div id="map"></div>' +
+      '</div>',
 
   advisoryKey: {
     "0": "white",
