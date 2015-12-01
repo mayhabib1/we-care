@@ -14,6 +14,10 @@ var MapView = Backbone.View.extend({
       '  <div id="map"></div>' +
       '</div>',
 
+  events: {
+    'click #myonoffswitch': 'toggleNewsSource'
+  },
+  
   advisoryKey: {
     "0": "white",
     "1": "#ffff38",
