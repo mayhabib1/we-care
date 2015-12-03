@@ -17,7 +17,7 @@ var MapView = Backbone.View.extend({
   events: {
     'click #myonoffswitch': 'toggleNewsSource'
   },
-  
+
   advisoryKey: {
     "0": "white",
     "1": "#ffff38",
@@ -35,7 +35,12 @@ var MapView = Backbone.View.extend({
       this.removeHeadlines();
     }, this);
     this.button.on('showNews', function() {
-      this.$el.find('.onoffswitch').show();
+      var isShrinked = this.$el.find('button:visible').hasClass('map');
+      if (isShrinked) {
+        this.$el.find('#map .onoffswitch').show();
+      } else {
+        this.$el.find('.btn-container .onoffswitch').show();
+      }
       this.model.separateHeadlines();
     }, this)
     this.model.on('warningsLoaded', this.renderMap, this);
@@ -95,7 +100,7 @@ var MapView = Backbone.View.extend({
             '    </label>' +
             '  </div>' +
             '</div>' +
-            '<div class="map-breaking-news"><button class="icon"></button></div>');
+            '<div class="map-breaking-news"><button class="map icon"></button></div>');
 
     // svg.append('foreignObject')
     //   .attr('class', 'toggle-bn-container')
