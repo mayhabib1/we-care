@@ -25,7 +25,7 @@
 
 ## Usage
 
-Visit the page, currently hosted on [arrogantstarfish.herokuapp.com](http://arrogantstarfish.herokuapp.com/)
+Visit the page, currently hosted on [caring.herokuapp.com](http://caring.herokuapp.com/)
 
 ## Technologies Used
 
